@@ -15,7 +15,7 @@ part 'number_trivia_dto.g.dart';
   ),
 ])
 final class NumberTriviaDTOMapper extends $NumberTriviaDTOMapper {
-
+  const NumberTriviaDTOMapper();
 }
 
 @Freezed(
@@ -23,7 +23,7 @@ final class NumberTriviaDTOMapper extends $NumberTriviaDTOMapper {
     when: FreezedWhenOptions.none
 )
 sealed class NumberTriviaDTO with _$NumberTriviaDTO {
-  static final NumberTriviaDTOMapper _mapper = NumberTriviaDTOMapper();
+  static const NumberTriviaDTOMapper _mapper = NumberTriviaDTOMapper();
 
   const factory NumberTriviaDTO({
     required String text,
@@ -36,6 +36,6 @@ sealed class NumberTriviaDTO with _$NumberTriviaDTO {
       _NumberTriviaDTO.fromJson(json);
 
   NumberTrivia toDomain() {
-    return _mapper.convert<NumberTriviaDTO, NumberTrivia>(this);
+    return _mapper.convert(this);
   }
 }
