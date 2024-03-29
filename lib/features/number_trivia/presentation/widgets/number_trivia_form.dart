@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../../../core/components/store/store.dart';
 import '../../../../core/domain/unsigned_integer.dart';
@@ -65,9 +66,7 @@ class NumberTriviaForm extends StatelessWidget {
             );
           },
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const Gap(10),
         const NumberTriviaFormButtons(),
       ],
     );

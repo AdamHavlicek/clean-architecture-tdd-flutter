@@ -27,9 +27,7 @@ class NumberTriviaPage extends StatelessWidget {
             Gap(10),
             // Top Half
             NumberTriviaDisplay(),
-            Gap(
-              20
-            ),
+            Gap(20),
             // Bottom Half
             NumberTriviaForm(),
           ],
