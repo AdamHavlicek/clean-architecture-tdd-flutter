@@ -38,6 +38,7 @@ migrate_working_dir/
 **/*.freezed.dart
 **/*.mocks.dart
 **/*.config.dart
+**/*.auto_mappr.dart
 
 # Symbolication related
 app.*.symbols
