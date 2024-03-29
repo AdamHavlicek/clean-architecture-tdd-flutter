@@ -6,7 +6,7 @@ import 'app_state.dart';
 
 @lazySingleton
 final class AppEpic {
-  final NumberTriviaDataEpic numberTriviaDataEpic;
+  final NumberTriviaDataEpic<AppState> numberTriviaDataEpic;
 
   AppEpic({
     required this.numberTriviaDataEpic,

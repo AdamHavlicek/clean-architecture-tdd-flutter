@@ -7,7 +7,7 @@ import '../../store/app_store.dart';
 import '../stream_listener.dart';
 
 typedef StateValueAccess<State> = String? Function(State state);
-typedef ValueObjectValidator = ValueObject Function(String? value);
+typedef ValueObjectValidator<T> = ValueObject<T> Function(String? value);
 
 class ReduxTextField extends HookWidget {
   final TextInputType keyboardType;
@@ -18,7 +18,7 @@ class ReduxTextField extends HookWidget {
   final InputDecoration decoration;
   final ValueChanged<String> onChange;
   final TextAlign textAlign;
-  final ValueObjectValidator? valueObjectValidator;
+  final ValueObjectValidator<dynamic>? valueObjectValidator;
   final TextEditingController? controller;
   final Function? onComplete;
   final FocusNode? focusNode;

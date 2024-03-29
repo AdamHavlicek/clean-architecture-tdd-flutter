@@ -22,7 +22,7 @@ const InputDecoration _inputDecoration = InputDecoration(
   ),
 );
 
-typedef _DispatchAction = Function();
+typedef _DispatchAction = VoidCallback;
 
 class NumberTriviaForm extends StatelessWidget {
   const NumberTriviaForm();

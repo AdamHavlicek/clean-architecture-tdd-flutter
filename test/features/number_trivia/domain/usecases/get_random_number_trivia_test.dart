@@ -28,6 +28,7 @@ void main() {
     const int expectedNumber = 1;
     const expectedNumberTrivia =
         NumberTrivia(number: expectedNumber, text: 'test');
+    const expectedResult = Right<Failure, NumberTrivia>(expectedNumberTrivia);
 
     // Mock
     when(mockNumberTriviaRepository.getRandomNumberTrivia())
@@ -37,7 +38,7 @@ void main() {
     final result = await tUseCase(noParams);
 
     // Assert
-    expect(result, const Right(expectedNumberTrivia));
+    expect(result, expectedResult);
     verify(mockNumberTriviaRepository.getRandomNumberTrivia());
     verifyNoMoreInteractions(mockNumberTriviaRepository);
   });

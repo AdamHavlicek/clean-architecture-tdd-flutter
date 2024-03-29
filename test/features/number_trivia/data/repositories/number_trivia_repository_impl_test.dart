@@ -114,7 +114,7 @@ void main() {
           'should return remote data when the call to remote data source is successful',
           () async {
         // Arrange
-        final expectedResult = Right(numberTrivia);
+        final expectedResult = Right<Failure, NumberTrivia>(numberTrivia);
 
         // Mock
         when(mockRemoteDataSource.getConcreteNumberTrivia(any))
@@ -134,7 +134,7 @@ void main() {
           'should cache the data locally when the call to remote data source is successful',
           () async {
         // Arrange
-        final expectedResult = Right(numberTrivia);
+        final expectedResult = Right<Failure, NumberTrivia>(numberTrivia);
 
         // Mock
         when(mockRemoteDataSource.getConcreteNumberTrivia(any))
@@ -156,7 +156,7 @@ void main() {
           () async {
         // Arrange
         const expectedMessage = 'Invalid Server Response';
-        const expectedResult = Left(ServerFailure(expectedMessage));
+        const expectedResult = Left<Failure, NumberTrivia>(ServerFailure(expectedMessage));
 
         // Mock
         when(mockRemoteDataSource.getConcreteNumberTrivia(any)).thenReturn(
@@ -177,7 +177,7 @@ void main() {
           'should return last locally cached data when the cached data is present',
           () async {
         // Arrange
-        final expectedResult = Right(numberTrivia);
+        final expectedResult = Right<Failure, NumberTrivia>(numberTrivia);
 
         // Mock
         when(mockLocalDataSource.getLastNumberTrivia())
@@ -196,7 +196,7 @@ void main() {
           () async {
         // Arrange
         const expectedMessage = 'Invalid Cache';
-        const expectedResult = Left(CacheFailure(expectedMessage));
+        const expectedResult = Left<Failure, NumberTrivia>(CacheFailure(expectedMessage));
 
         // Mock
         when(mockLocalDataSource.getLastNumberTrivia()).thenReturn(
@@ -241,7 +241,7 @@ void main() {
           'should return remote data when the call to remote data source is successful',
           () async {
         // Arrange
-        final expectedResult = Right(numberTrivia);
+        final expectedResult = Right<Failure, NumberTrivia>(numberTrivia);
 
         // Mock
         when(mockRemoteDataSource.getRandomNumberTrivia())
@@ -261,7 +261,7 @@ void main() {
           'should cache the data locally when the call to remote data source is successful',
           () async {
         // Arrange
-        final expectedResult = Right(numberTrivia);
+        final expectedResult = Right<Failure, NumberTrivia>(numberTrivia);
 
         // Mock
         when(mockRemoteDataSource.getRandomNumberTrivia())
@@ -283,7 +283,7 @@ void main() {
           () async {
         // Arrange
         const expectedMessage = 'Invalid Server Response';
-        const expectedResult = Left(ServerFailure(expectedMessage));
+        const expectedResult = Left<Failure, NumberTrivia>(ServerFailure(expectedMessage));
 
         // Mock
         when(mockRemoteDataSource.getRandomNumberTrivia()).thenReturn(
@@ -304,7 +304,7 @@ void main() {
           'should return last locally cached data when the cached data is present',
           () async {
         // Arrange
-        final expectedResult = Right(numberTrivia);
+        final expectedResult = Right<Failure, NumberTrivia>(numberTrivia);
 
         // Mock
         when(mockLocalDataSource.getLastNumberTrivia())
@@ -323,7 +323,7 @@ void main() {
           () async {
         // Arrange
         const expectedMessage = 'Invalid Cache';
-        const expectedResult = Left(CacheFailure(expectedMessage));
+        const expectedResult = Left<Failure, NumberTrivia>(CacheFailure(expectedMessage));
 
         // Mock
         when(mockLocalDataSource.getLastNumberTrivia()).thenReturn(

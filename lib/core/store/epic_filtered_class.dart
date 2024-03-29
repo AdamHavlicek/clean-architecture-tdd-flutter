@@ -16,7 +16,7 @@ abstract interface class _RequiredActionTransform<State> {
 abstract class EpicFilteredClass<State> extends EpicClass<State>
     implements _RequiredActionTransform<State> {
   @override
-  Stream call(Stream actions, EpicStore<State> store) {
+  Stream<dynamic> call(Stream<dynamic> actions, EpicStore<State> store) {
     // This will filter any unhandled action emit in Epics
     return mapAction(actions, store).whereNotNull();
   }
@@ -25,7 +25,7 @@ abstract class EpicFilteredClass<State> extends EpicClass<State>
 /// Mixin with same functionality as [EpicFilteredClass]
 mixin EpicFilteredMixin<State> on EpicClass<State> {
   @override
-  Stream call(Stream actions, EpicStore<State> store) {
+  Stream<dynamic> call(Stream<dynamic> actions, EpicStore<State> store) {
     return super.call(actions, store).whereNotNull();
   }
 }

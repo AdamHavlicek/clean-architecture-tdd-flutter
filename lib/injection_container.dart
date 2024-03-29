@@ -28,6 +28,7 @@ abstract class RegisterModule {
     return AppStore(
       middleware: [
         epicMiddleware.call,
+        // ignore: inference_failure_on_instance_creation
         LoggingMiddleware.printer().call,
       ],
     );

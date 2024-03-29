@@ -75,7 +75,7 @@ void main() {
         () async {
           // Arrange
           final expectedResult =
-              NumberTriviaDTO.fromJson(json.decode(fixtureString));
+              NumberTriviaDTO.fromJson(json.decode(fixtureString) as Map<String, dynamic>);
           final runner = tDataSource.getConcreteNumberTrivia(number).run();
 
           // Mock
@@ -149,7 +149,7 @@ void main() {
         () async {
           // Arrange
           final expectedResult =
-              NumberTriviaDTO.fromJson(json.decode(fixtureString));
+              NumberTriviaDTO.fromJson(json.decode(fixtureString) as Map<String, dynamic>);
           final runner = tDataSource.getRandomNumberTrivia().run();
 
           // Mock

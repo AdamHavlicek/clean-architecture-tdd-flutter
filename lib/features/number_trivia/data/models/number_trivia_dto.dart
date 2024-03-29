@@ -35,6 +35,10 @@ sealed class NumberTriviaDTO with _$NumberTriviaDTO {
   factory NumberTriviaDTO.fromJson(Map<String, dynamic> json) =>
       _NumberTriviaDTO.fromJson(json);
 
+  factory NumberTriviaDTO.fromDomain(NumberTrivia object) {
+    return NumberTriviaDTO._mapper.convert(object);
+  }
+
   NumberTrivia toDomain() {
     return _mapper.convert(this);
   }

@@ -14,7 +14,8 @@ abstract interface class NumberTriviaLocalDataSource {
 }
 
 @LazySingleton(as: NumberTriviaLocalDataSource)
-final class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
+final class NumberTriviaLocalDataSourceImpl
+    implements NumberTriviaLocalDataSource {
   final SharedPreferences sharedPreferences;
   final cacheKey = 'CACHED_NUMBER_TRIVIA';
 
@@ -28,7 +29,9 @@ final class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSour
       sharedPreferences.getString(cacheKey),
       () => const CacheException(message: 'Cache is empty'),
     ).map(
-      (jsonString) => NumberTriviaDTO.fromJson(json.decode(jsonString)),
+      (jsonString) => NumberTriviaDTO.fromJson(
+        json.decode(jsonString) as Map<String, dynamic>,
+      ),
     );
   }
 
@@ -36,10 +39,12 @@ final class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSour
   Task<Unit> cacheNumberTrivia(NumberTriviaDTO triviaToCache) {
     return Task.of(
       json.encode(triviaToCache.toJson()),
-    ).flatMap(
-      (jsonString) => Task(
-        () => sharedPreferences.setString(cacheKey, jsonString),
-      ),
-    ).map((_) => unit);
+    )
+        .flatMap(
+          (jsonString) => Task(
+            () => sharedPreferences.setString(cacheKey, jsonString),
+          ),
+        )
+        .map((_) => unit);
   }
 }

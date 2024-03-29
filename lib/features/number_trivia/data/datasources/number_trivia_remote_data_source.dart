@@ -21,7 +21,7 @@ final class NumberTriviaRemoteDataSourceImpl
   final String host = 'numberapi.com';
   final String scheme = 'http';
 
-  Function get concreteNumberUrl => _getBaseNumberApiUri;
+  Uri Function(String path) get concreteNumberUrl => _getBaseNumberApiUri;
 
   Uri get randomNumberUrl => _getBaseNumberApiUri('random');
 
@@ -54,7 +54,7 @@ final class NumberTriviaRemoteDataSourceImpl
           ),
         )
         .map(
-          (response) => NumberTriviaDTO.fromJson(json.decode(response.body)),
+          (response) => NumberTriviaDTO.fromJson(json.decode(response.body) as Map<String, dynamic>),
         );
   }
 

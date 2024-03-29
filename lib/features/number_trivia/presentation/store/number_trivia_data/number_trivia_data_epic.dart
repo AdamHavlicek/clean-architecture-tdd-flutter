@@ -43,7 +43,7 @@ final class NumberTriviaDataEpic<T> extends EpicFilteredClass<T> {
   }
 
   @override
-  Stream mapAction(Stream actions, EpicStore<T> store) {
+  Stream<dynamic> mapAction(Stream<dynamic> actions, EpicStore<T> store) {
     return actions.whereType<NumberTriviaDataAction>().switchMap(
       (action) async* {
         yield* switch (action) {

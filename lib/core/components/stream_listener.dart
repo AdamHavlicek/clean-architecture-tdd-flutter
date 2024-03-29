@@ -21,7 +21,7 @@ final class StreamListener<T> extends StatefulWidget {
 }
 
 final class StreamListenerState<T> extends State<StreamListener<T>> {
-  late final StreamSubscription _subscription;
+  late final StreamSubscription<T> _subscription;
 
   @override
   void initState() {

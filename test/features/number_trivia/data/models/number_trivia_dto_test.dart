@@ -23,9 +23,9 @@ void main() {
   group('fromJson', () {
     const tNumberTriviaDTO = NumberTriviaDTO(number: 1, text: 'Test Text');
 
-    test('shoud return a valid model when JSON number is an integer', () {
+    test('should return a valid model when JSON number is an integer', () {
       // Arrange
-      final Map<String, dynamic> jsonMap = json.decode(fixture('trivia.json'));
+      final jsonMap = json.decode(fixture('trivia.json')) as Map<String, dynamic>;
 
       // Act
       final result = NumberTriviaDTO.fromJson(jsonMap);
@@ -36,11 +36,11 @@ void main() {
 
     test('should return a valid model when JSON number is an double', () {
       // Arrange
-      final Map<String, dynamic> jsonMap =
+      final jsonMap =
           json.decode(fixture('trivia_double.json'));
 
       // Act
-      final result = NumberTriviaDTO.fromJson(jsonMap);
+      final result = NumberTriviaDTO.fromJson(jsonMap as Map<String, dynamic>);
 
       // Assert
       expect(result, tNumberTriviaDTO);
@@ -64,4 +64,41 @@ void main() {
       expect(result, expectedResult);
     });
   });
+
+  group(
+    'toDomain',
+    () {
+      test(
+        'should return [NumberTrvia when called]',
+        () {
+          // Arrange
+          const expectedNumber = 1;
+          const expectedText = 'Test text';
+          const tNumberTrivia = NumberTriviaDTO(
+            text: expectedText,
+            number: expectedNumber,
+          );
+
+          // Act
+          final result = tNumberTrivia.toDomain();
+
+          // Assert
+          expect(
+            result,
+            isA<NumberTrivia>()
+                .having(
+                  (p0) => p0.number,
+                  'number',
+                  equals(expectedNumber),
+                )
+                .having(
+                  (p0) => p0.text,
+                  'text',
+                  equals(expectedText),
+                ),
+          );
+        },
+      );
+    },
+  );
 }

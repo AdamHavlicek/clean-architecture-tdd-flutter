@@ -18,7 +18,7 @@ final class AppStore extends Store<AppState> {
           middleware: [...middleware],
         );
 
-  final BehaviorSubject _actionsSubject = BehaviorSubject();
+  final BehaviorSubject<dynamic> _actionsSubject = BehaviorSubject();
 
   Stream<dynamic> get actions =>
       _actionsSubject.stream.where((event) => event != null);
@@ -33,7 +33,7 @@ final class AppStore extends Store<AppState> {
   Stream<Change<AppState>> get changes => onChange.changes;
 
   @override
-  Future teardown() async {
+  Future<dynamic> teardown() async {
     _actionsSubject.close();
 
     return super.teardown();

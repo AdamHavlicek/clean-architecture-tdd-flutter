@@ -17,7 +17,7 @@ void main() {
         () {
       // Arrange
       const String string = '1';
-      const expectedResult = Right(1);
+      const expectedResult = Right<Failure, int>(1);
 
       // Act
       final result = inputValidator(string);
@@ -29,7 +29,7 @@ void main() {
     test('should return a [Failure] when the string is not an integer', () {
       // Arrange
       const String string = '1.11';
-      const expectedResult = Left(InvalidInputFailure('Must be an integer'));
+      const expectedResult = Left<Failure, int>(InvalidInputFailure('Must be an integer'));
 
       // Act
       final result = inputValidator(string);
@@ -42,7 +42,7 @@ void main() {
       // Arrange
       const String string = '-1';
       const expectedResult =
-          Left(InvalidInputFailure('Must be an unsigned integer'));
+          Left<Failure, int>(InvalidInputFailure('Must be an unsigned integer'));
 
       // Act
       final result = inputValidator(string);
@@ -54,7 +54,7 @@ void main() {
     test('should return a [Failure] when the string is empty', () {
       // Arrange
       const String string = ' ';
-      const expectedResult = Left(
+      const expectedResult = Left<Failure, String>(
         InvalidInputFailure('Must be a non-empty string'),
       );
 
