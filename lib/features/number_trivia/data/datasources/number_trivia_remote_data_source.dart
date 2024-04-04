@@ -38,14 +38,17 @@ final class NumberTriviaRemoteDataSourceImpl
   TaskEither<Exception, NumberTriviaDTO> _getTriviaFromUrl(
     Uri concreteOrRandomUrl,
   ) {
-    return TaskEither<Exception, Response>.tryCatch(
-            () => httpClient.get(
-                  concreteOrRandomUrl,
-                  headers: headers,
-                ),
-            (err, __) => UnexpectedServerException(
-                  message: 'Unexpected Exception $err',
-                ))
+    final maybeResponse = TaskEither<Exception, Response>.tryCatch(
+      () => httpClient.get(
+        concreteOrRandomUrl,
+        headers: headers,
+      ),
+      (err, __) => const UnexpectedServerException(
+        message: 'Unable to fetch data from the server',
+      ),
+    );
+
+    return maybeResponse
         .chainEither(
           (response) => Either.fromPredicate(
             response,
@@ -54,7 +57,9 @@ final class NumberTriviaRemoteDataSourceImpl
           ),
         )
         .map(
-          (response) => NumberTriviaDTO.fromJson(json.decode(response.body) as Map<String, dynamic>),
+          (response) => NumberTriviaDTO.fromJson(
+            json.decode(response.body) as Map<String, dynamic>,
+          ),
         );
   }
 

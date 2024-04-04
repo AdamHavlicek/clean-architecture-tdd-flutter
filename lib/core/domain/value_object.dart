@@ -10,22 +10,27 @@ abstract class ValueObject<T> {
   Either<Failure, T> get value;
 
   T get get {
+    assert(
+      value is! Right<Failure, T>,
+      "Tried to access to value but it's [Left]",
+    );
+
     return value.fold(
-      (valueFailure) => throw Exception(
-        'Tried to get value invalid [ValueObject]',
+      (_) => throw Exception(
+        'Tried to get value invalid [ValueObject<$T>]',
       ),
       identity,
     );
   }
 
   Option<Failure> get failure {
-    return value.fold(some, (_) => none());
+    return value.fold(some, (_) => const None());
   }
 
   Either<Failure, Unit> get failureOrUnit {
     return value.fold(
       left,
-      (r) => right(unit),
+      (_) => right(unit),
     );
   }
 

@@ -37,7 +37,7 @@ class NumberTriviaForm extends StatelessWidget {
           valueObjectValidator: (value) => UnsignedInteger(value ?? ''),
           onChange: (number) {
             store.dispatch(
-              NumberTriviaFormAction.numberChanged(number),
+              NumberTriviaFormAction.numberChanged(UnsignedInteger(number)),
             );
           },
           stateValueAccess: (state) {
