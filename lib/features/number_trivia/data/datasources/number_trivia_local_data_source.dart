@@ -30,7 +30,7 @@ final class NumberTriviaLocalDataSourceImpl
       () => const CacheException(message: 'Cache is empty'),
     ).map(
       (jsonString) => NumberTriviaDTO.fromJson(
-        json.decode(jsonString) as Map<String, dynamic>,
+        json.decode(jsonString) as Map<String, Object?>,
       ),
     );
   }

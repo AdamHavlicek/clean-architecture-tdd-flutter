@@ -5,10 +5,7 @@ import '../../../domain/entities/number_trivia.dart';
 
 part 'number_trivia_data_state.freezed.dart';
 
-@Freezed(
-    map: FreezedMapOptions.none,
-    when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class NumberTriviaDataState with _$NumberTriviaDataState {
   const NumberTriviaDataState._();
 
@@ -19,7 +16,7 @@ sealed class NumberTriviaDataState with _$NumberTriviaDataState {
   const factory NumberTriviaDataState.loaded(
     NumberTrivia trivia,
   ) = LoadedState;
-  
+
   const factory NumberTriviaDataState.error(
     Failure failure,
   ) = ErrorState;

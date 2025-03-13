@@ -2,10 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'number_trivia_form_action.freezed.dart';
 
-@Freezed(
-  map: FreezedMapOptions.none,
-  when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class NumberTriviaFormAction with _$NumberTriviaFormAction {
   const NumberTriviaFormAction._();
 

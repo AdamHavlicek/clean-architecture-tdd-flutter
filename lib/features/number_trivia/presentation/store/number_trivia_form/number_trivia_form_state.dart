@@ -4,10 +4,7 @@ import '../../../domain/entities/concrete_number_trivia_params.dart';
 
 part 'number_trivia_form_state.freezed.dart';
 
-@Freezed(
-    map: FreezedMapOptions.none,
-    when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class NumberTriviaFormState with _$NumberTriviaFormState {
   const factory NumberTriviaFormState({
     required ConcreteNumberTriviaParams params,

@@ -2,10 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'number_trivia.freezed.dart';
 
-@Freezed(
-    map: FreezedMapOptions.none,
-    when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class NumberTrivia with _$NumberTrivia {
   const factory NumberTrivia({
     required String text,

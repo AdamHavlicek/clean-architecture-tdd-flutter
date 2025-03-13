@@ -4,10 +4,7 @@ import '../../../../core/domain/unsigned_integer.dart';
 
 part 'concrete_number_trivia_params.freezed.dart';
 
-@Freezed(
-    map: FreezedMapOptions.none,
-    when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class ConcreteNumberTriviaParams with _$ConcreteNumberTriviaParams {
   const factory ConcreteNumberTriviaParams({
     required UnsignedInteger number,

@@ -49,9 +49,7 @@ class NumberTriviaFormButtons extends StatelessWidget {
                 state,
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const Gap(10),
             Expanded(
               child: ElevatedButton(
                 onPressed: dispatchRandom,

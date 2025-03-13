@@ -54,7 +54,7 @@ final class NumberTriviaRemoteDataSourceImpl
           ),
         )
         .map(
-          (response) => NumberTriviaDTO.fromJson(json.decode(response.body) as Map<String, dynamic>),
+          (response) => NumberTriviaDTO.fromJson(json.decode(response.body) as Map<String, Object?>),
         );
   }
 

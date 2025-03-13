@@ -50,7 +50,6 @@ linter:
     throw_in_finally: true
     unnecessary_statements: true
     unrelated_type_equality_checks: true
-    unsafe_html: true
     # Only when needed
     use_key_in_widget_constructors: false
     valid_regexps: true
@@ -134,7 +133,6 @@ linter:
     # https://youtu.be/2a_ytyt9sf8?t=605
     # At the beginning of this project I didn't follow this so there will
     # be an overuse of comments in some parts of this codebase
-    package_api_docs: false
     public_member_api_docs: false
     package_prefixed_library_names: true
     # It's just easier to make some changes directly on the parameters

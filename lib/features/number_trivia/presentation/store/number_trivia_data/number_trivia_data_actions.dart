@@ -6,10 +6,7 @@ import '../../../domain/entities/number_trivia.dart';
 
 part 'number_trivia_data_actions.freezed.dart';
 
-@Freezed(
-    map: FreezedMapOptions.none,
-    when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class NumberTriviaDataAction with _$NumberTriviaDataAction {
   const NumberTriviaDataAction._();
 

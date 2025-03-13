@@ -12,7 +12,7 @@ import 'core/store/app_state.dart';
 import 'core/store/app_store.dart';
 import 'injection_container.config.dart';
 
-final getIt = GetIt.instance;
+final GetIt getIt = GetIt.instance;
 
 @module
 abstract class RegisterModule {
@@ -36,7 +36,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   InternetConnectionChecker get internetConnectionChecker =>
-      InternetConnectionChecker();
+      InternetConnectionChecker.createInstance();
 
   @lazySingleton
   http.Client get httpClient => http.Client();

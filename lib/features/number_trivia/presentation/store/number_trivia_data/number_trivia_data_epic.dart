@@ -4,6 +4,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../../core/error/failures.dart';
+import '../../../../../core/store/app_state.dart';
 import '../../../../../core/store/epic_filtered_class.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/entities/concrete_number_trivia_params.dart';
@@ -15,7 +16,7 @@ import 'number_trivia_data_actions.dart';
 typedef _UseCaseInvoke = Future<Either<Failure, NumberTrivia>> Function();
 
 @lazySingleton
-final class NumberTriviaDataEpic<T> extends EpicFilteredClass<T> {
+final class NumberTriviaDataEpic extends EpicFilteredClass<AppState> {
   final GetConcreteNumberTrivia getConcreteNumberTrivia;
   final GetRandomNumberTrivia getRandomNumberTrivia;
 
@@ -43,7 +44,8 @@ final class NumberTriviaDataEpic<T> extends EpicFilteredClass<T> {
   }
 
   @override
-  Stream<dynamic> mapAction(Stream<dynamic> actions, EpicStore<T> store) {
+  Stream<dynamic> mapAction<State>(Stream<dynamic> actions, EpicStore<State>
+  store) {
     return actions.whereType<NumberTriviaDataAction>().switchMap(
       (action) async* {
         yield* switch (action) {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:clean_architecture_tdd_course/core/domain/unsigned_integer.dart';
 import 'package:clean_architecture_tdd_course/core/error/failures.dart';
-import 'package:clean_architecture_tdd_course/core/store/app_state.dart';
 import 'package:clean_architecture_tdd_course/core/usecases/usecase.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/domain/entities/concrete_number_trivia_params.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/domain/entities/number_trivia.dart';
@@ -29,7 +28,7 @@ void main() {
   late MockGetConcreteNumberTrivia mockGetConcreteNumberTrivia;
   late MockGetRandomNumberTrivia mockGetRandomNumberTrivia;
   late Store<NumberTriviaDataState> store;
-  late NumberTriviaDataEpic<dynamic> tEpic;
+  late NumberTriviaDataEpic tEpic;
 
   setUp(() {
     provideDummy<Either<Failure, NumberTrivia>>(
@@ -41,7 +40,7 @@ void main() {
     mockGetConcreteNumberTrivia = MockGetConcreteNumberTrivia();
     mockGetRandomNumberTrivia = MockGetRandomNumberTrivia();
 
-    tEpic = NumberTriviaDataEpic<AppState>(
+    tEpic = NumberTriviaDataEpic(
       getConcreteNumberTrivia: mockGetConcreteNumberTrivia,
       getRandomNumberTrivia: mockGetRandomNumberTrivia,
     );
@@ -50,7 +49,7 @@ void main() {
       numberTriviaDataReducer,
       initialState: NumberTriviaDataState.initial,
       middleware: [
-        EpicMiddleware<NumberTriviaDataState>(tEpic.call).call,
+        EpicMiddleware<NumberTriviaDataState>(tEpic.mapAction).call,
       ],
     );
   });

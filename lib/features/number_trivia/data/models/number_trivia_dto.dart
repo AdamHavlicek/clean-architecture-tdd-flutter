@@ -11,17 +11,15 @@ part 'number_trivia_dto.g.dart';
 
 @AutoMappr([
   MapType<NumberTrivia, NumberTriviaDTO>(
-    reverse: true
+    reverse: true,
+    safeMapping: true,
   ),
 ])
 final class NumberTriviaDTOMapper extends $NumberTriviaDTOMapper {
   const NumberTriviaDTOMapper();
 }
 
-@Freezed(
-    map: FreezedMapOptions.none,
-    when: FreezedWhenOptions.none
-)
+@Freezed()
 sealed class NumberTriviaDTO with _$NumberTriviaDTO {
   static const NumberTriviaDTOMapper _mapper = NumberTriviaDTOMapper();
 
@@ -32,7 +30,7 @@ sealed class NumberTriviaDTO with _$NumberTriviaDTO {
 
   const NumberTriviaDTO._();
 
-  factory NumberTriviaDTO.fromJson(Map<String, dynamic> json) =>
+  factory NumberTriviaDTO.fromJson(Map<String, Object?> json) =>
       _NumberTriviaDTO.fromJson(json);
 
   factory NumberTriviaDTO.fromDomain(NumberTrivia object) {
