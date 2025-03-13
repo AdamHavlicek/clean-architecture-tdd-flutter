@@ -41,13 +41,13 @@ abstract class RegisterModule {
   @lazySingleton
   http.Client get httpClient => http.Client();
 
-  @preResolve
-  Future<SharedPreferences> get preferences => SharedPreferences.getInstance();
+  @lazySingleton
+  SharedPreferencesAsync get preferences => SharedPreferencesAsync();
 }
 
 @InjectableInit(preferRelativeImports: true)
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await getIt.init();
+  getIt.init();
 }

@@ -69,7 +69,7 @@ void main() {
     'toDomain',
     () {
       test(
-        'should return [NumberTrvia when called]',
+        'should return [NumberTrivia when called]',
         () {
           // Arrange
           const expectedNumber = 1;

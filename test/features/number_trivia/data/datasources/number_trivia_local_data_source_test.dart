@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:clean_architecture_tdd_course/core/error/exceptions.dart';
-import 'package:clean_architecture_tdd_course/core/error/failures.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/data/models/number_trivia_dto.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,16 +13,16 @@ import '../../../../fixtures/fixture_reader.dart';
 import 'number_trivia_local_data_source_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<SharedPreferences>(),
+  MockSpec<SharedPreferencesAsync>(),
 ])
 void main() {
-  late MockSharedPreferences mockSharedPreferences;
+  late MockSharedPreferencesAsync mockSharedPreferencesAsync;
   late NumberTriviaLocalDataSourceImpl tDataSource;
 
   setUp(() {
-    mockSharedPreferences = MockSharedPreferences();
+    mockSharedPreferencesAsync = MockSharedPreferencesAsync();
     tDataSource = NumberTriviaLocalDataSourceImpl(
-      sharedPreferences: mockSharedPreferences,
+      sharedPreferences: mockSharedPreferencesAsync,
     );
   });
 
@@ -39,7 +38,7 @@ void main() {
           final String fixtureTrivia = fixture('trivia_cached.json');
 
           const expectedKey = 'CACHED_NUMBER_TRIVIA';
-          final expectedResult = Either<Failure, NumberTriviaDTO>.right(
+          final expectedResult = Either<Exception, NumberTriviaDTO>.right(
             NumberTriviaDTO.fromJson(
               json.decode(fixtureTrivia) as Map<String, dynamic>,
             ),
@@ -47,16 +46,17 @@ void main() {
 
           // Mock
           when(
-            mockSharedPreferences.getString(any),
-          ).thenReturn(
-            fixtureTrivia,
+            mockSharedPreferencesAsync.getString(any),
+          ).thenAnswer(
+            (_) async => fixtureTrivia,
           );
 
           // Act
-          final result = tDataSource.getLastNumberTrivia().run();
+          final Either<Exception, NumberTriviaDTO> result = await tDataSource
+              .getLastNumberTrivia().run();
 
           // Assert
-          verify(mockSharedPreferences.getString(expectedKey)).called(1);
+          verify(mockSharedPreferencesAsync.getString(expectedKey)).called(1);
           expect(result, equals(expectedResult));
         },
       );
@@ -67,16 +67,16 @@ void main() {
           // Arrange
           // Mock
           when(
-            mockSharedPreferences.getString(any),
-          ).thenReturn(
-            null,
+            mockSharedPreferencesAsync.getString(any),
+          ).thenAnswer(
+            (_) async => null,
           );
 
           // Act
-          final Exception result = tDataSource.getLastNumberTrivia().run().fold(
+          final Exception result = await tDataSource.getLastNumberTrivia().match(
                 identity,
                 (_) => fail('should return [CacheException]'),
-              );
+              ).run();
 
           // Assert
           expect(result, isA<CacheException>());
@@ -98,7 +98,7 @@ void main() {
 
           // Mock
           when(
-            mockSharedPreferences.setString(any, any),
+            mockSharedPreferencesAsync.setString(any, any),
           ).thenAnswer(
             (_) async => true,
           );
@@ -107,7 +107,7 @@ void main() {
           await tDataSource.cacheNumberTrivia(numberTriviaDTO).run();
 
           // Assert
-          verify(mockSharedPreferences.setString(expectedKey, expectedValue))
+          verify(mockSharedPreferencesAsync.setString(expectedKey, expectedValue))
               .called(1);
         },
       );

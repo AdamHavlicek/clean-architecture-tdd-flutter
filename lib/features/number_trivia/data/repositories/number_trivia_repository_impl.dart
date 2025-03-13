@@ -38,7 +38,7 @@ final class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   }
 
   TaskEither<Failure, NumberTrivia> _hitCache() {
-    return localDataSource.getLastNumberTrivia().toTaskEither().bimap(
+    return localDataSource.getLastNumberTrivia().bimap(
           (exception) => switch (exception) {
             final BaseException e => Failure.fromBaseException(e),
             _ => const UnexpectedFailure(),

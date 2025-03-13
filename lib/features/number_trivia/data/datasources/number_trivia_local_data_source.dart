@@ -5,10 +5,11 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/extensions/task_option.dart';
 import '../models/number_trivia_dto.dart';
 
 abstract interface class NumberTriviaLocalDataSource {
-  IOEither<Exception, NumberTriviaDTO> getLastNumberTrivia();
+  TaskEither<Exception, NumberTriviaDTO> getLastNumberTrivia();
 
   Task<Unit> cacheNumberTrivia(NumberTriviaDTO triviaToCache);
 }
@@ -16,7 +17,7 @@ abstract interface class NumberTriviaLocalDataSource {
 @LazySingleton(as: NumberTriviaLocalDataSource)
 final class NumberTriviaLocalDataSourceImpl
     implements NumberTriviaLocalDataSource {
-  final SharedPreferences sharedPreferences;
+  final SharedPreferencesAsync sharedPreferences;
   final cacheKey = 'CACHED_NUMBER_TRIVIA';
 
   NumberTriviaLocalDataSourceImpl({
@@ -24,15 +25,19 @@ final class NumberTriviaLocalDataSourceImpl
   });
 
   @override
-  IOEither<Exception, NumberTriviaDTO> getLastNumberTrivia() {
-    return IOEither<Exception, String>.fromNullable(
-      sharedPreferences.getString(cacheKey),
-      () => const CacheException(message: 'Cache is empty'),
-    ).map(
-      (jsonString) => NumberTriviaDTO.fromJson(
-        json.decode(jsonString) as Map<String, Object?>,
-      ),
-    );
+  TaskEither<Exception, NumberTriviaDTO> getLastNumberTrivia() {
+    return taskEitherFromNullable(
+      () => sharedPreferences.getString(cacheKey),
+    )
+        .toTaskEither<Exception>(
+          () => const CacheException(message: 'Cache is empty'),
+        )
+        .map(
+          (jsonString) => json.decode(jsonString) as Map<String, Object?>,
+        )
+        .map(
+          NumberTriviaDTO.fromJson,
+        );
   }
 
   @override
