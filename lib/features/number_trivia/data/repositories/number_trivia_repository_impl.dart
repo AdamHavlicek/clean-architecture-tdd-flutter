@@ -78,6 +78,6 @@ final class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
       },
     );
 
-    return TaskEither.flatten(TaskEither.fromTask(triviaOrFailure));
+    return TaskEither.flatten(triviaOrFailure.toTaskEither());
   }
 }

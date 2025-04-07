@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/entities/concrete_number_trivia_params.dart';
+import '../../models/concrete_number_trivia_params.dart';
 
 part 'number_trivia_form_state.freezed.dart';
 

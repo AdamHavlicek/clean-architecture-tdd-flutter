@@ -7,7 +7,7 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../core/store/app_state.dart';
 import '../../../../../core/store/epic_filtered_class.dart';
 import '../../../../../core/usecases/usecase.dart';
-import '../../../domain/entities/concrete_number_trivia_params.dart';
+import '../../models/concrete_number_trivia_params.dart';
 import '../../../domain/entities/number_trivia.dart';
 import '../../../domain/usecases/get_concrete_number_trivia.dart';
 import '../../../domain/usecases/get_random_number_trivia.dart';

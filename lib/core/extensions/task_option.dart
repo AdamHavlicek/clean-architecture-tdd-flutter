@@ -1,5 +1,9 @@
 import 'package:fpdart/fpdart.dart';
 
-TaskOption<T> taskEitherFromNullable<T>(Future<T?> Function() future) {
-  return TaskOption<T>(() => future().then(Option.fromNullable));
+extension TaskOptionExtensions<T> on TaskOption<T> {
+  static TaskOption<T> fromNullableAsync<T>(Future<T?> Function()
+  future) {
+    return TaskOption<T>(() => future().then(Option.fromNullable));
+  }
 }
+

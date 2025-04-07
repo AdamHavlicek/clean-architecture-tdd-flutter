@@ -8,7 +8,7 @@ NumberTriviaFormState numberTriviaFormReducer(
   if (action is NumberTriviaFormAction) {
     return switch (action) {
       NumberChangedAction(:final number) => state.copyWith.params(
-          number: UnsignedInteger(number!),
+          number: UnsignedInteger(number),
         ),
     };
   }

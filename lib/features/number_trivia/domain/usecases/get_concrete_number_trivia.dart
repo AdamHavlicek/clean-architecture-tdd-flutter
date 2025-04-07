@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../entities/concrete_number_trivia_params.dart';
+import '../../presentation/models/concrete_number_trivia_params.dart';
 import '../entities/number_trivia.dart';
 import '../repositories/number_trivia_repository.dart';
 

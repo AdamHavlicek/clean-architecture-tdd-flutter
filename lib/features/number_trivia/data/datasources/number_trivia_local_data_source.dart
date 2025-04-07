@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exceptions.dart';
-import '../../../../core/extensions/task_option.dart';
+import '../../../../core/extensions/extensions.dart';
 import '../models/number_trivia_dto.dart';
 
 abstract interface class NumberTriviaLocalDataSource {
@@ -26,7 +26,7 @@ final class NumberTriviaLocalDataSourceImpl
 
   @override
   TaskEither<Exception, NumberTriviaDTO> getLastNumberTrivia() {
-    return taskEitherFromNullable(
+    return TaskOptionExtensions.fromNullableAsync<String>(
       () => sharedPreferences.getString(cacheKey),
     )
         .toTaskEither<Exception>(

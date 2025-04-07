@@ -1,12 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/network/network.dart';
 import 'core/store/app_epic.dart';
 import 'core/store/app_state.dart';
 import 'core/store/app_store.dart';
@@ -35,8 +38,27 @@ abstract class RegisterModule {
   }
 
   @lazySingleton
-  InternetConnectionChecker get internetConnectionChecker =>
-      InternetConnectionChecker.createInstance();
+  InternetConnection get connectionChecker {
+    final Iterable<InternetCheckOption> addresses = ADDRESS_OPTIONS_LIST.map(
+      (options) => InternetCheckOption(
+        uri: options.uri,
+        timeout: options.timeout,
+      ),
+    );
+
+    return InternetConnection.createInstance(
+      customCheckOptions: addresses.toList(growable: false),
+    );
+  }
+
+  @lazySingleton
+  NetworkInfo networkInfo(InternetConnection connectionChecker) {
+    return NetworkInfoImpl(
+      connectionChecker: connectionChecker,
+      onDataListenerFactory: NetworkInfoImpl.onDataConnectionCheckerFactory,
+      isConnectedCompleterFactory: Completer.sync,
+    );
+  }
 
   @lazySingleton
   http.Client get httpClient => http.Client();

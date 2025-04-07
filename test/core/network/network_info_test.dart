@@ -1,44 +1,63 @@
+import 'dart:async';
+
 import 'package:clean_architecture_tdd_course/core/network/network_info.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'network_info_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<InternetConnectionChecker>(),
+  MockSpec<InternetConnection>(),
 ])
 void main() {
-  late NetworkInfoImpl tNetworkInfoImpl;
-  late MockInternetConnectionChecker mockInternetConnectionChecker;
+  late MockInternetConnection mockInternetConnection;
+  late Stream<InternetStatus> internetConnectionStatusStream;
+  late Completer<bool> Function() isConnectedCompleter;
 
-  setUp(() {
-    mockInternetConnectionChecker = MockInternetConnectionChecker();
+  late NetworkInfoImpl tNetworkInfo;
 
-    tNetworkInfoImpl =
-        NetworkInfoImpl(connectionChecker: mockInternetConnectionChecker);
-  });
-
-  group(
-    'isConnected',
+  setUp(
     () {
-      test('should forward the call to [InternetConnectionChecker.hasConnection]',
-          () async {
-        // Arrange
-        final Future<bool> expectedResult = Future.value(true);
+      mockInternetConnection = MockInternetConnection();
+      internetConnectionStatusStream = Stream.value(
+        InternetStatus.connected,
+      );
+      isConnectedCompleter = Completer.sync;
 
-        // Mock
-        when(mockInternetConnectionChecker.hasConnection)
-            .thenAnswer((_) => expectedResult);
+      when(
+        mockInternetConnection.onStatusChange,
+      ).thenAnswer(
+        (_) => internetConnectionStatusStream,
+      );
 
-        // Act
-        final result = tNetworkInfoImpl.isConnected.run();
+      tNetworkInfo = NetworkInfoImpl(
+        connectionChecker: mockInternetConnection,
+        onDataListenerFactory: (completerFactory) =>
+            (_) => completerFactory().complete(true),
+        isConnectedCompleterFactory: isConnectedCompleter,
+      );
+    },
+  );
 
-        // Assert
-        verify(mockInternetConnectionChecker.hasConnection).called(1);
-        expect(result, equals(expectedResult));
-      });
+  tearDown(
+    () {
+      tNetworkInfo.dispose();
+    },
+  );
+
+  test(
+    'should forward the function call',
+    () async {
+      // Arrange
+      const expectedResult = true;
+
+      // Act
+      final result = await tNetworkInfo.isConnected.run();
+
+      // Assert
+      expect(result, expectedResult);
     },
   );
 }

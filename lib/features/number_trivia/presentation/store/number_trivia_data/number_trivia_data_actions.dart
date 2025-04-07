@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../core/error/failures.dart';
-import '../../../domain/entities/concrete_number_trivia_params.dart';
+import '../../models/concrete_number_trivia_params.dart';
 import '../../../domain/entities/number_trivia.dart';
 
 part 'number_trivia_data_actions.freezed.dart';

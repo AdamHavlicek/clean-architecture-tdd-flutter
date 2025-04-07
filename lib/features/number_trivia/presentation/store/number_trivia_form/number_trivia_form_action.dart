@@ -6,6 +6,6 @@ part 'number_trivia_form_action.freezed.dart';
 sealed class NumberTriviaFormAction with _$NumberTriviaFormAction {
   const NumberTriviaFormAction._();
 
-  const factory NumberTriviaFormAction.numberChanged(String? number) =
+  const factory NumberTriviaFormAction.numberChanged(String number) =
       NumberChangedAction;
 }
