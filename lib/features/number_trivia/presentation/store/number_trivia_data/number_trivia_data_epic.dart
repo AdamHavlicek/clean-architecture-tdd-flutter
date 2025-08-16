@@ -7,10 +7,10 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../core/store/app_state.dart';
 import '../../../../../core/store/epic_filtered_class.dart';
 import '../../../../../core/usecases/usecase.dart';
-import '../../models/concrete_number_trivia_params.dart';
 import '../../../domain/entities/number_trivia.dart';
 import '../../../domain/usecases/get_concrete_number_trivia.dart';
 import '../../../domain/usecases/get_random_number_trivia.dart';
+import '../../models/concrete_number_trivia_params.dart';
 import 'number_trivia_data_actions.dart';
 
 typedef _UseCaseInvoke = Future<Either<Failure, NumberTrivia>> Function();
@@ -44,7 +44,7 @@ final class NumberTriviaDataEpic extends EpicFilteredClass<AppState> {
   }
 
   @override
-  Stream<dynamic> mapAction<State>(Stream<dynamic> actions, EpicStore<State>
+  Stream<dynamic> mapAction<State_>(Stream<dynamic> actions, EpicStore<State_>
   store) {
     return actions.whereType<NumberTriviaDataAction>().switchMap(
       (action) async* {

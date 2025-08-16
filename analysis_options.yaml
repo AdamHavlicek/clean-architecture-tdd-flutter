@@ -185,6 +185,7 @@ linter:
     sort_child_properties_last: true
     sort_constructors_first: false
     sort_unnamed_constructors_first: true
+    switch_on_type: true
     tighten_type_of_initializing_formals: true
     type_annotate_public_apis: true
     type_init_formals: true
@@ -208,6 +209,7 @@ linter:
     # Simply makes code more readable
     # (variables don't appear from nowhere)
     unnecessary_this: false
+    unnecessary_unawaited: true
     use_full_hex_values_for_flutter_colors: true
     use_function_type_syntax_for_parameters: true
     use_if_null_to_convert_nulls_to_bools: true
@@ -223,7 +225,7 @@ linter:
 
     depend_on_referenced_packages: true
     package_names: true
-    # It's pretty much irelevant
+    # It's pretty much irrelevant
     sort_pub_dependencies: false
 
 # Additional information about this file can be found at
@@ -255,4 +257,3 @@ analyzer:
     unused_local_variable: warning
     deprecated_member_use_from_same_package: warning
     record_literal_one_positional_no_trailing_comma: error
-

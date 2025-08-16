@@ -24,9 +24,6 @@ class NumberTriviaDisplay extends StatelessWidget {
           ErrorState(:final failure) => MessageDisplay(
               message: failure.message,
             ),
-          EmptyState() => const MessageDisplay(
-              message: 'Start searching!',
-            ),
         };
       },
     );

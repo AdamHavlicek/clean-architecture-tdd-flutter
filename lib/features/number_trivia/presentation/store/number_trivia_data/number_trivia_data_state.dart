@@ -9,7 +9,9 @@ part 'number_trivia_data_state.freezed.dart';
 sealed class NumberTriviaDataState with _$NumberTriviaDataState {
   const NumberTriviaDataState._();
 
-  const factory NumberTriviaDataState.empty() = EmptyState;
+  const factory NumberTriviaDataState.error(
+    Failure failure,
+  ) = ErrorState;
 
   const factory NumberTriviaDataState.loading() = LoadingState;
 
@@ -17,9 +19,7 @@ sealed class NumberTriviaDataState with _$NumberTriviaDataState {
     NumberTrivia trivia,
   ) = LoadedState;
 
-  const factory NumberTriviaDataState.error(
-    Failure failure,
-  ) = ErrorState;
-
-  static const NumberTriviaDataState initial = NumberTriviaDataState.empty();
+  static const NumberTriviaDataState initial = NumberTriviaDataState.error(
+    UnexpectedFailure('Start Searching!'),
+  );
 }

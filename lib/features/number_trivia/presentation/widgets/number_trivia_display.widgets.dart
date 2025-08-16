@@ -3,10 +3,7 @@ part of 'number_trivia_display.dart';
 class MessageDisplay extends StatelessWidget {
   final String message;
 
-  const MessageDisplay({
-    super.key,
-    required this.message,
-  });
+  const MessageDisplay({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +23,13 @@ class MessageDisplay extends StatelessWidget {
 }
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({
-    super.key,
-  });
+  const LoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
-      child: const Center(
-        child: CircularProgressIndicator(),
-      ),
+      child: const Center(child: CircularProgressIndicator()),
     );
   }
 }
@@ -44,10 +37,7 @@ class LoadingWidget extends StatelessWidget {
 class TriviaDisplay extends StatelessWidget {
   final NumberTrivia trivia;
 
-  const TriviaDisplay({
-    super.key,
-    required this.trivia,
-  });
+  const TriviaDisplay({super.key, required this.trivia});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +51,9 @@ class TriviaDisplay extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      trivia.number.toString(),
+                      trivia.number.value
+                          .map((value) => value.toString())
+                          .getOrElse((_) => ''),
                       style: const TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,

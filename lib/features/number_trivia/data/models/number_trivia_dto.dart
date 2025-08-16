@@ -2,21 +2,40 @@ import 'package:auto_mappr_annotation/auto_mappr_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/data/converters.dart';
+import '../../../../core/domain/unsigned_integer.dart';
 import '../../domain/entities/number_trivia.dart';
 import 'number_trivia_dto.auto_mappr.dart';
 
 part 'number_trivia_dto.freezed.dart';
+
 part 'number_trivia_dto.g.dart';
 
-
-@AutoMappr([
-  MapType<NumberTrivia, NumberTriviaDTO>(
-    reverse: true,
-    safeMapping: true,
-  ),
-])
+@AutoMappr(
+  [
+    MapType<NumberTrivia, NumberTriviaDTO>(
+      reverse: true,
+      safeMapping: true,
+    ),
+  ],
+  converters: [
+    TypeConverter<num, UnsignedInteger>(
+      NumberTriviaDTOMapper.fromNumToUnsignedInteger,
+    ),
+    TypeConverter<UnsignedInteger, num>(
+      NumberTriviaDTOMapper.fromUnsignedIntegerToNum,
+    ),
+  ],
+)
 final class NumberTriviaDTOMapper extends $NumberTriviaDTOMapper {
   const NumberTriviaDTOMapper();
+
+  static UnsignedInteger fromNumToUnsignedInteger(num source) {
+    return UnsignedInteger(source.toString());
+  }
+
+  static num fromUnsignedIntegerToNum(UnsignedInteger source) {
+    return source.get;
+  }
 }
 
 @Freezed()

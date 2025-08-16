@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:clean_architecture_tdd_course/core/domain/unsigned_integer.dart';
 import 'package:clean_architecture_tdd_course/core/error/failures.dart';
 import 'package:clean_architecture_tdd_course/core/usecases/usecase.dart';
-import 'package:clean_architecture_tdd_course/features/number_trivia/presentation/models/concrete_number_trivia_params.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
+import 'package:clean_architecture_tdd_course/features/number_trivia/presentation/models/concrete_number_trivia_params.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/presentation/store/number_trivia_data/number_trivia_data_actions.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/presentation/store/number_trivia_data/number_trivia_data_epic.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/presentation/store/number_trivia_data/number_trivia_data_reducers.dart';
@@ -70,10 +70,9 @@ void main() {
 
   group('GetTriviaForConcreteNumber', () {
     const String validNumberString = '1';
-    const int numberParsed = 1;
-    const numberTrivia = NumberTrivia(
+    final numberTrivia = NumberTrivia(
       text: 'test trivia',
-      number: numberParsed,
+      number: UnsignedInteger(validNumberString),
     );
     const actionToInvoke = NumberTriviaDataAction.fetchConcrete;
 
@@ -87,7 +86,7 @@ void main() {
 
         // Mock
         when(mockGetConcreteNumberTrivia(any)).thenAnswer(
-          (_) async => const Right(numberTrivia),
+          (_) async => Right(numberTrivia),
         );
 
         // Act
@@ -109,15 +108,15 @@ void main() {
           number: UnsignedInteger(validNumberString),
         );
         final action = NumberTriviaDataAction.fetchConcrete(params);
-        const expectedStates = [
-          NumberTriviaDataState.loading(),
+        final expectedStates = [
+          const NumberTriviaDataState.loading(),
           NumberTriviaDataState.loaded(numberTrivia),
         ];
         final result = store.onChange;
 
         // Mock
         when(mockGetConcreteNumberTrivia(any)).thenAnswer(
-          (_) async => const Right(numberTrivia),
+          (_) async => Right(numberTrivia),
         );
 
         // Act
@@ -196,9 +195,9 @@ void main() {
   });
 
   group('GetTriviaForRandomNumber', () {
-    const numberTrivia = NumberTrivia(
+    final numberTrivia = NumberTrivia(
       text: 'test trivia',
-      number: 1,
+      number: UnsignedInteger('1'),
     );
     const actionToInvoke = NumberTriviaDataAction.fetchRandom;
 
@@ -210,7 +209,7 @@ void main() {
 
         // Mock
         when(mockGetRandomNumberTrivia(any)).thenAnswer(
-          (_) async => const Right(numberTrivia),
+          (_) async => Right(numberTrivia),
         );
 
         // Act
@@ -228,15 +227,15 @@ void main() {
       'should emit [Loading, Loaded] when data is gotten successfully',
       () async {
         // Arrange
-        const expectedStates = [
-          NumberTriviaDataState.loading(),
+        final expectedStates = [
+          const NumberTriviaDataState.loading(),
           NumberTriviaDataState.loaded(numberTrivia),
         ];
         final result = store.onChange;
 
         // Mock
         when(mockGetRandomNumberTrivia(any)).thenAnswer(
-          (_) async => const Right(numberTrivia),
+          (_) async => Right(numberTrivia),
         );
 
         // Act

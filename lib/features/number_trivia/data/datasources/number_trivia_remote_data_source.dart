@@ -43,7 +43,7 @@ final class NumberTriviaRemoteDataSourceImpl
                   concreteOrRandomUrl,
                   headers: headers,
                 ),
-            (err, __) => UnexpectedServerException(
+            (err, _) => UnexpectedServerException(
                   message: 'Unexpected Exception $err',
                 ))
         .chainEither(

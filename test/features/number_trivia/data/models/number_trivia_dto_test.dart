@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_architecture_tdd_course/core/domain/unsigned_integer.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/data/models/number_trivia_dto.dart';
 import 'package:clean_architecture_tdd_course/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,25 +8,17 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  group('toDomain', () {
-    test('should be a subclass of [NumberTrivia] Entity', () async {
-      // Arrange
-      const dto = NumberTriviaDTO(number: 1, text: 'Test Text');
-
-      // Act
-      final result = dto.toDomain();
-
-      // Assert
-      expect(result, isA<NumberTrivia>());
-    });
-  });
-
   group('fromJson', () {
-    const tNumberTriviaDTO = NumberTriviaDTO(number: 1, text: 'Test Text');
+    const tNumberTriviaDTO = NumberTriviaDTO(
+      number: 1,
+      text: 'Test Text',
+    );
 
     test('should return a valid model when JSON number is an integer', () {
       // Arrange
-      final jsonMap = json.decode(fixture('trivia.json')) as Map<String, dynamic>;
+      final jsonMap = json.decode(
+        fixture('trivia.json'),
+      ) as Map<String, dynamic>;
 
       // Act
       final result = NumberTriviaDTO.fromJson(jsonMap);
@@ -36,8 +29,9 @@ void main() {
 
     test('should return a valid model when JSON number is an double', () {
       // Arrange
-      final jsonMap =
-          json.decode(fixture('trivia_double.json'));
+      final jsonMap = json.decode(
+        fixture('trivia_double.json'),
+      );
 
       // Act
       final result = NumberTriviaDTO.fromJson(jsonMap as Map<String, dynamic>);
@@ -69,11 +63,13 @@ void main() {
     'toDomain',
     () {
       test(
-        'should return [NumberTrivia when called]',
+        'should return [NumberTrivia]',
         () {
           // Arrange
-          const expectedNumber = 1;
+          const int expectedNumber = 1;
           const expectedText = 'Test text';
+          final expectedUnsignedInteger = UnsignedInteger(expectedNumber.toString());
+
           const tNumberTrivia = NumberTriviaDTO(
             text: expectedText,
             number: expectedNumber,
@@ -87,12 +83,12 @@ void main() {
             result,
             isA<NumberTrivia>()
                 .having(
-                  (p0) => p0.number,
+                  (numberTrivia) => numberTrivia.number,
                   'number',
-                  equals(expectedNumber),
+                  equals(expectedUnsignedInteger),
                 )
                 .having(
-                  (p0) => p0.text,
+                  (numberTrivia) => numberTrivia.text,
                   'text',
                   equals(expectedText),
                 ),
